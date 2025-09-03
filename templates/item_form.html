@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-bold">{{ item and 'Edit Item' or 'Add Item' }}</h1>
+  {% if item %}
+    <span class="text-sm text-slate-500">ID: {{ item.id }}</span>
+  {% endif %}
+</div>
+
+<form method="post" class="space-y-6">
+
+  <!-- Item basics -->
+  <section class="card p-5">
+    <h2 class="text-lg font-semibold mb-4">Item Details</h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium mb-1">Name <span class="text-rose-600">*</span></label>
+        <input type="text" name="name" value="{{ item.name if item else '' }}" required class="input" placeholder="e.g., Agarose Powder">
+        <p class="text-xs text-slate-500 mt-1">Use a clear, searchable name.</p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Category</label>
+        <input type="text" name="category" value="{{ item.category if item else '' }}" class="input" placeholder="Reagents, Media, Kits…">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Vendor</label>
+        <input type="text" name="vendor" value="{{ item.vendor if item else '' }}" class="input" placeholder="ThermoFisher, Sigma-Aldrich…">
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Catalog #</label>
+          <input type="text" name="catalog_no" value="{{ item.catalog_no if item else '' }}" class="input" placeholder="AG100">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Lot #</label>
+          <input type="text" name="lot_no" value="{{ item.lot_no if item else '' }}" class="input" placeholder="LOT101">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stock & storage -->
+  <section class="card p-5">
+    <h2 class="text-lg font-semibold mb-4">Stock & Storage</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      <div>
+        <label class="block text-sm font-medium mb-1">Quantity</label>
+        <input type="number" step="any" name="quantity" value="{{ item.quantity if item else '' }}" class="input" placeholder="e.g., 500">
+        <p class="text-xs text-slate-500 mt-1">Current on-hand amount.</p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Units</label>
+        <input type="text" name="units" value="{{ item.units if item else '' }}" class="input" placeholder="g, mL, kits, vials…">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Low-stock threshold</label>
+        <input type="number" step="any" name="threshold" value="{{ item.threshold if item else '' }}" class="input" placeholder="Triggers Low badge">
+      </div>
+
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium mb-1">Location</label>
+        <input type="text" name="location" value="{{ item.location if item else '' }}" class="input" placeholder="Room · Cabinet · Shelf (e.g., Freezer −20 · Shelf A)">
+      </div>
+    </div>
+  </section>
+
+  <!-- Dates -->
+  <section class="card p-5">
+    <h2 class="text-lg font-semibold mb-4">Dates</h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium mb-1">Received date</label>
+        <input type="date" name="received_date" value="{{ item.received_date.isoformat() if item and item.received_date else '' }}" class="input">
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1">Expiry date</label>
+        <input type="date" name="expiry_date" value="{{ item.expiry_date.isoformat() if item and item.expiry_date else '' }}" class="input">
+      </div>
+    </div>
+  </section>
+
+  <!-- Labs / ownership -->
+  <section class="card p-5">
+    <h2 class="text-lg font-semibold mb-4">Lab Assignment</h2>
+    {% if labs and labs|length %}
+      <div class="flex flex-wrap gap-3">
+        {% for lab in labs %}
+          <label class="inline-flex items-center gap-2 text-sm px-3 py-2 rounded-lg border border-slate-300">
+            <input type="checkbox" name="labs" value="{{ lab.id }}"
+                   {% if selected_lab_ids and (lab.id in selected_lab_ids) %}checked{% endif %}>
+            <span class="font-medium">{{ lab.name }}</span>
+          </label>
+        {% endfor %}
+      </div>
+      <p class="text-xs text-slate-500 mt-2">Assign to one or more labs for ownership, filtering, and reporting.</p>
+    {% else %}
+      <p class="text-slate-500 text-sm">No labs yet. Create labs on the <a class="brand hover:underline" href="{{ url_for('labs_list') }}">Labs</a> page, then return here to assign this item.</p>
+    {% endif %}
+  </section>
+
+  <!-- Notes -->
+  <section class="card p-5">
+    <h2 class="text-lg font-semibold mb-4">Notes</h2>
+    <textarea name="notes" rows="4" class="input" placeholder="Handling notes, SDS link location, storage cautions…">{{ item.notes if item else '' }}</textarea>
+  </section>
+
+  <!-- Sticky actions -->
+  <div class="sticky bottom-4">
+    <div class="card px-4 py-3 flex items-center gap-3">
+      <button class="btnp">{{ item and 'Save changes' or 'Create item' }}</button>
+      <a href="{{ url_for('items_list') }}" class="btn">Cancel</a>
+      {% if item %}
+        <span class="ml-auto text-sm text-slate-500">Last updated: {{ (item.received_date or now)|string }}</span>
+      {% endif %}
+    </div>
+  </div>
+</form>
+
+{% if item %}
+  <!-- Attachments -->
+  <section class="mt-8 card p-5">
+    <h2 class="text-lg font-semibold mb-3">Attachments</h2>
+    <form class="flex flex-wrap gap-2 items-center" method="post" action="{{ url_for('item_attach', item_id=item.id) }}" enctype="multipart/form-data">
+      <input type="file" name="file" required
+             class="block text-sm file:mr-4 file:py-2 file:px-4
+                    file:rounded-lg file:border file:border-slate-300 file:bg-slate-100 file:text-slate-700">
+      <select name="kind" class="select">
+        <option value="">Type (optional)</option>
+        <option value="SDS">SDS</option>
+        <option value="COA">COA</option>
+        <option value="protocol">Protocol</option>
+        <option value="image">Image</option>
+        <option value="other">Other</option>
+      </select>
+      <button class="btnp">Upload</button>
+    </form>
+
+    {% if attachments and attachments|length %}
+      <ul class="mt-4 divide-y divide-slate-200">
+        {% for a in attachments %}
+          <li class="py-2 flex items-center justify-between text-sm">
+            <div>
+              <a class="brand hover:underline" href="{{ url_for('files_serve', fname=a.filename) }}" target="_blank">
+                {{ a.original_name }}
+              </a>
+              {% if a.kind %}<span class="ml-2 inline-block px-2 py-0.5 border border-slate-300 rounded text-xs">{{ a.kind }}</span>{% endif %}
+              <span class="text-slate-500 ml-2">{{ a.uploaded_at.strftime('%Y-%m-%d %H:%M') }}</span>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-slate-500 text-sm mt-2">No attachments yet.</p>
+    {% endif %}
+  </section>
+{% endif %}
+{% endblock %}

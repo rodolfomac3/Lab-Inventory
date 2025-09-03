@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Header -->
+<div class="mb-6">
+  <h1 class="text-2xl font-bold">Dashboard</h1>
+</div>
+
+<!-- KPI Row -->
+<div class="grid md:grid-cols-4 gap-4 mb-6">
+  <div class="card p-4">
+    <div class="kpi-label">Total Items</div>
+    <div class="kpi-value">{{ total_items }}</div>
+  </div>
+  <div class="card p-4">
+    <div class="kpi-label">Low Stock</div>
+    <div class="kpi-value">{{ low_count }}</div>
+  </div>
+  <div class="card p-4">
+    <div class="kpi-label">Expiring (30d)</div>
+    <div class="kpi-value">{{ expiring_count }}</div>
+  </div>
+  <div class="card p-4">
+    <div class="kpi-label">Usage (14d)</div>
+    <div class="mt-2">
+      <svg width="220" height="48" viewBox="0 0 220 48" aria-hidden="true">
+        <polyline points="{{ spark_points }}" fill="none" stroke="currentColor" class="brand" stroke-width="2" />
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- Attention + Reorder -->
+<div class="grid lg:grid-cols-3 gap-4 mb-6">
+  <!-- Needs Attention -->
+  <div class="lg:col-span-2 card p-4">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-lg font-semibold">Needs attention</h2>
+      <a href="{{ url_for('items_list') }}?status=low" class="text-sm brand hover:underline">View all</a>
+    </div>
+
+    {% set any_attention = (low_items|length) + (expiring_items|length) %}
+    {% if any_attention == 0 %}
+      <p class="text-slate-500 text-sm">All good — no low or expiring items right now.</p>
+    {% else %}
+      <div class="overflow-x-auto">
+        <table class="w-full text-[15px] border border-slate-300">
+          <thead class="bg-slate-50">
+            <tr>
+              <th class="th border-r border-slate-300">Item</th>
+              <th class="th border-r border-slate-300">Qty</th>
+              <th class="th border-r border-slate-300">Expiry</th>
+              <th class="th">Quick Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in low_items %}
+            <tr class="row bg-rose-50/50">
+              <td class="td border-r border-slate-300">
+                <div class="font-semibold">{{ i.name }}</div>
+                <div class="text-[13px] text-slate-500">{{ i.vendor or '—' }}{% if i.catalog_no %} · {{ i.catalog_no }}{% endif %}</div>
+              </td>
+              <td class="td border-r border-slate-300">
+                {{ i.quantity or 0 }} {{ i.units or '' }}
+                <span class="badge badge-low ml-2">Low</span>
+              </td>
+              <td class="td border-r border-slate-300">{{ i.expiry_date or '—' }}</td>
+              <td class="td">
+                <div class="flex flex-wrap gap-2">
+                  <a href="{{ url_for('item_edit', item_id=i.id) }}" class="btn">Edit</a>
+                  <a href="{{ url_for('reorder_list') }}" class="btn">Reorder</a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+            {% for i in expiring_items %}
+            <tr class="row bg-amber-50/60">
+              <td class="td border-r border-slate-300">
+                <div class="font-semibold">{{ i.name }}</div>
+                <div class="text-[13px] text-slate-500">{{ i.vendor or '—' }}{% if i.catalog_no %} · {{ i.catalog_no }}{% endif %}</div>
+              </td>
+              <td class="td border-r border-slate-300">{{ i.quantity or 0 }} {{ i.units or '' }}</td>
+              <td class="td border-r border-slate-300">
+                {{ i.expiry_date or '—' }}
+                <span class="badge badge-exp ml-2">Expiring</span>
+              </td>
+              <td class="td">
+                <div class="flex flex-wrap gap-2">
+                  <a href="{{ url_for('item_edit', item_id=i.id) }}" class="btn">Edit</a>
+                  <a href="{{ url_for('items_list') }}?status=expiring" class="btn">All expiring</a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Reorder Queue -->
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-lg font-semibold">Reorder queue</h2>
+      <a href="{{ url_for('reorder_list') }}" class="text-sm brand hover:underline">Open list</a>
+    </div>
+    {% if reorder_preview %}
+      <ul class="divide-y divide-slate-200">
+        {% for r in reorder_preview %}
+        <li class="py-2">
+          <div class="font-medium">{{ r.item.name }}</div>
+          <div class="text-sm text-slate-500">Qty {{ r.requested_qty }} · {{ r.item.vendor or '—' }}</div>
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-slate-500 text-sm">Nothing queued yet.</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Activity + New Items -->
+<div class="grid lg:grid-cols-2 gap-4">
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-lg font-semibold">Recent activity</h2>
+      <a href="{{ url_for('transactions_list') }}" class="text-sm brand hover:underline">All activity</a>
+    </div>
+    {% if recent_txns %}
+      <ul class="divide-y divide-slate-200">
+        {% for t in recent_txns %}
+        <li class="py-2 text-sm flex items-center justify-between">
+          <div>
+            <span class="{% if t.delta < 0 %}text-rose-600{% else %}text-emerald-700{% endif %} font-medium">{{ t.delta }}</span>
+            <span class="text-slate-700">· {{ t.item.name }}</span>
+          </div>
+          <div class="text-slate-500">{{ t.ts.strftime('%Y-%m-%d %H:%M') }}</div>
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-slate-500 text-sm">No transactions yet.</p>
+    {% endif %}
+  </div>
+
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-lg font-semibold">Recently added</h2>
+      <a href="{{ url_for('items_list') }}" class="text-sm brand hover:underline">All items</a>
+    </div>
+    {% if recent_items %}
+      <ul class="divide-y divide-slate-200">
+        {% for i in recent_items %}
+        <li class="py-2">
+          <div class="font-medium">{{ i.name }}</div>
+          <div class="text-sm text-slate-500">
+            {{ i.category or '—' }}{% if i.vendor %} · {{ i.vendor }}{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-slate-500 text-sm">No items yet.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+

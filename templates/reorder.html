@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Reorder List</h1>
+
+{% if rows and rows|length %}
+<div class="overflow-x-auto card">
+  <table class="w-full text-base border border-slate-300">
+    <thead>
+      <tr class="bg-slate-100">
+        <th class="th border-r border-slate-300">Item</th>
+        <th class="th border-r border-slate-300">Vendor</th>
+        <th class="th border-r border-slate-300">Requested Qty</th>
+        <th class="th border-r border-slate-300">Status</th>
+        <th class="th border-r border-slate-300">Notes</th>
+        <th class="th">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr class="row">
+        <td class="td border-r border-slate-300">
+          <div class="font-semibold">{{ r.item.name }}</div>
+          <div class="text-sm text-slate-500">
+            {{ r.item.catalog_no or '' }}{% if r.item.catalog_no and r.item.lot_no %} · {% endif %}{{ r.item.lot_no or '' }}
+          </div>
+        </td>
+        <td class="td border-r border-slate-300">{{ r.item.vendor or "—" }}</td>
+        <td class="td border-r border-slate-300">{{ r.requested_qty }}</td>
+        <td class="td border-r border-slate-300"><span class="badge bg-slate-100 border border-slate-300">{{ r.status }}</span></td>
+        <td class="td border-r border-slate-300">{{ r.notes or "—" }}</td>
+        <td class="td">
+          <form method="post" action="{{ url_for('reorder_status', req_id=r.id) }}" class="flex items-center gap-2">
+            <select name="status" class="select">
+              {% for s in ['open','ordered','received','canceled'] %}
+                <option value="{{ s }}" {% if r.status==s %}selected{% endif %}>{{ s }}</option>
+              {% endfor %}
+            </select>
+            <button class="btn btnp">Update</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="text-slate-500">No reorder requests yet. From the Items page, use the “Reorder” action.</p>
+{% endif %}
+{% endblock %}

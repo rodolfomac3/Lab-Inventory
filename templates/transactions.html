@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Transactions (latest 200)</h1>
+
+{% if txns and txns|length %}
+<div class="overflow-x-auto card">
+  <table class="w-full text-base border border-slate-300">
+    <thead>
+      <tr class="bg-slate-100">
+        <th class="th border-r border-slate-300">When</th>
+        <th class="th border-r border-slate-300">Item</th>
+        <th class="th border-r border-slate-300">Δ Quantity</th>
+        <th class="th border-r border-slate-300">Reason</th>
+        <th class="th border-r border-slate-300">Actor</th>
+        <th class="th">Note</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in txns %}
+      <tr class="row">
+        <td class="td border-r border-slate-300">{{ t.ts.strftime('%Y-%m-%d %H:%M') }}</td>
+        <td class="td border-r border-slate-300">{{ t.item.name }}</td>
+        <td class="td border-r border-slate-300">
+          <span class="{% if t.delta < 0 %}text-rose-600{% else %}text-emerald-700{% endif %}">{{ t.delta }}</span>
+        </td>
+        <td class="td border-r border-slate-300">{{ t.reason or "—" }}</td>
+        <td class="td border-r border-slate-300">{{ t.actor or "—" }}</td>
+        <td class="td">{{ t.note or "—" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="text-slate-500">No transactions yet.</p>
+{% endif %}
+{% endblock %}

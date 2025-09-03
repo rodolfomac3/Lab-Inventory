@@ -1,0 +1,151 @@
+name,category,vendor,catalog_no,lot_no,quantity,units,location,threshold,received_date,expiry_date,notes
+DNA/RNA Item 1,DNA/RNA,ThermoFisher,C1000,L1000,770.32,µL,Fridge 4C,6.94,2025-03-18,2026-06-20,Handle with care
+Enzymes Item 2,Enzymes,Corning,C1001,L1001,237.77,kits,Freezer -80,8.75,2024-01-23,2028-01-30,Keep sterile
+Kits Item 3,Kits,Bio-Rad,C1002,L1002,629.26,vials,Cabinet 2,22.71,2025-03-15,2028-08-08,
+Antibodies Item 4,Antibodies,Bio-Rad,C1003,L1003,416.31,kits,Freezer -80,2.4,2023-11-04,2025-10-26,Light-sensitive
+Buffers Item 5,Buffers,NEB,C1004,L1004,755.28,mL,Cabinet 1,21.65,2024-03-04,2028-09-02,
+Reagents Item 6,Reagents,Fisher,C1005,L1005,953.35,kits,Fridge 4C,30.96,2024-09-12,2025-10-19,Keep sterile
+DNA/RNA Item 7,DNA/RNA,Eppendorf,C1006,L1006,697.96,g,Cabinet 2,8.35,2024-08-29,2028-03-01,Light-sensitive
+Buffers Item 8,Buffers,Bio-Rad,C1007,L1007,371.21,tips,Shelf A,39.56,2024-05-11,2029-03-21,
+DNA/RNA Item 9,DNA/RNA,Sigma-Aldrich,C1008,L1008,27.78,g,Shelf B,0.82,2024-02-14,2029-07-28,For qPCR only
+Consumables Item 10,Consumables,NEB,C1009,L1009,323.58,vials,Cabinet 1,7.97,2024-07-25,2026-01-24,Light-sensitive
+Buffers Item 11,Buffers,NEB,C1010,L1010,412.05,tubes,Shelf B,22.49,2025-05-11,2027-07-07,
+Consumables Item 12,Consumables,NEB,C1011,L1011,605.33,g,Freezer -20,26.6,2024-11-06,2027-01-07,Keep sterile
+Buffers Item 13,Buffers,Eppendorf,C1012,L1012,869.56,L,Cabinet 2,5.47,2025-06-23,2028-07-22,Handle with care
+Consumables Item 14,Consumables,Eppendorf,C1013,L1013,362.37,tubes,Cabinet 2,9.23,2024-11-23,2027-08-11,
+Consumables Item 15,Consumables,Sigma-Aldrich,C1014,L1014,630.2,µL,Cabinet 1,36.29,2024-01-01,2027-05-19,Handle with care
+Reagents Item 16,Reagents,Qiagen,C1015,L1015,176.82,g,Shelf B,33.67,2024-09-23,2027-02-14,Handle with care
+Media Item 17,Media,Corning,C1016,L1016,584.69,L,Freezer -80,17.6,2023-12-28,2027-08-27,For qPCR only
+Plastics Item 18,Plastics,Corning,C1017,L1017,649.88,vials,Freezer -80,28.5,2024-11-26,2027-04-05,Light-sensitive
+Plastics Item 19,Plastics,Sigma-Aldrich,C1018,L1018,24.38,L,Shelf A,12.78,2025-06-27,2028-02-14,For qPCR only
+Kits Item 20,Kits,NEB,C1019,L1019,169.16,µL,Fridge 4C,11.3,2025-08-04,2029-02-24,Handle with care
+Consumables Item 21,Consumables,ThermoFisher,C1020,L1020,660.11,vials,Cabinet 1,25.74,2024-01-21,2028-04-25,Keep sterile
+Consumables Item 22,Consumables,Bio-Rad,C1021,L1021,892.51,L,Fridge 4C,13.05,2025-01-05,2029-07-12,
+Antibodies Item 23,Antibodies,NEB,C1022,L1022,382.87,vials,Shelf B,6.15,2023-04-12,2027-08-27,For qPCR only
+Consumables Item 24,Consumables,ThermoFisher,C1023,L1023,682.99,g,Cabinet 2,5.69,2025-05-21,2027-08-30,Handle with care
+Media Item 25,Media,Bio-Rad,C1024,L1024,986.69,g,Cabinet 2,7.12,2022-12-18,2028-08-07,Handle with care
+Plastics Item 26,Plastics,Qiagen,C1025,L1025,333.13,kits,Shelf B,27.02,2025-06-14,2027-07-01,Handle with care
+Media Item 27,Media,Bio-Rad,C1026,L1026,292.0,vials,Cabinet 2,39.7,2024-08-10,2026-09-07,Handle with care
+DNA/RNA Item 28,DNA/RNA,Sigma-Aldrich,C1027,L1027,0.41,tubes,Cabinet 2,7.42,2024-05-06,2028-04-06,For qPCR only
+Kits Item 29,Kits,Sigma-Aldrich,C1028,L1028,820.91,µL,Freezer -20,26.27,2024-02-28,2026-05-22,Handle with care
+Buffers Item 30,Buffers,Sigma-Aldrich,C1029,L1029,591.6,mL,Shelf B,0.9,2023-08-14,2026-02-18,
+Media Item 31,Media,R&D Systems,C1030,L1030,511.38,tips,Shelf A,48.57,2025-01-13,2028-09-23,Handle with care
+Consumables Item 32,Consumables,Corning,C1031,L1031,620.9,g,Freezer -20,43.28,2023-06-30,2027-05-25,Light-sensitive
+Consumables Item 33,Consumables,R&D Systems,C1032,L1032,158.71,µL,Fridge 4C,8.29,2023-12-26,2027-06-11,Light-sensitive
+DNA/RNA Item 34,DNA/RNA,Sigma-Aldrich,C1033,L1033,506.12,mL,Freezer -20,18.27,2023-10-15,2025-10-20,Light-sensitive
+Antibodies Item 35,Antibodies,Corning,C1034,L1034,575.06,vials,Cabinet 2,37.18,2025-07-20,2026-08-14,Handle with care
+Antibodies Item 36,Antibodies,Corning,C1035,L1035,363.19,kits,Fridge 4C,17.25,2024-09-24,2027-07-31,For qPCR only
+DNA/RNA Item 37,DNA/RNA,Corning,C1036,L1036,222.29,g,Shelf A,32.42,2023-11-02,2029-08-29,Keep sterile
+DNA/RNA Item 38,DNA/RNA,Bio-Rad,C1037,L1037,749.05,L,Fridge 4C,32.25,2025-04-26,2026-07-13,
+Kits Item 39,Kits,Fisher,C1038,L1038,263.02,kits,Cabinet 2,40.96,2023-05-10,2027-07-02,Light-sensitive
+Antibodies Item 40,Antibodies,R&D Systems,C1039,L1039,479.29,L,Freezer -20,18.99,2023-04-29,2027-07-14,
+Buffers Item 41,Buffers,R&D Systems,C1040,L1040,524.06,L,Cabinet 2,34.52,2023-09-27,2027-03-01,
+Kits Item 42,Kits,Corning,C1041,L1041,471.3,L,Shelf A,38.31,2023-05-21,2027-04-12,Handle with care
+Plastics Item 43,Plastics,ThermoFisher,C1042,L1042,10.9,tips,Shelf A,22.87,2023-05-15,2028-02-29,For qPCR only
+Antibodies Item 44,Antibodies,Fisher,C1043,L1043,349.58,mL,Shelf A,27.91,2025-02-23,2026-02-09,Handle with care
+Plastics Item 45,Plastics,ThermoFisher,C1044,L1044,165.26,tips,Cabinet 2,45.73,2025-07-02,2026-11-22,
+Consumables Item 46,Consumables,Eppendorf,C1045,L1045,752.36,g,Shelf A,37.64,2024-02-04,2028-02-14,For qPCR only
+Consumables Item 47,Consumables,Bio-Rad,C1046,L1046,903.64,µL,Freezer -20,14.79,2025-04-07,2026-03-11,For qPCR only
+Kits Item 48,Kits,Qiagen,C1047,L1047,357.17,tubes,Cabinet 2,14.99,2024-09-09,2028-06-02,Handle with care
+Consumables Item 49,Consumables,Sigma-Aldrich,C1048,L1048,872.07,µL,Freezer -20,34.27,2023-05-14,2028-06-27,Keep sterile
+Media Item 50,Media,ThermoFisher,C1049,L1049,279.15,L,Cabinet 2,16.36,2024-12-07,2028-04-30,For qPCR only
+Buffers Item 51,Buffers,R&D Systems,C1050,L1050,369.32,mL,Shelf B,40.69,2024-09-12,2026-07-29,Keep sterile
+Antibodies Item 52,Antibodies,Fisher,C1051,L1051,179.45,vials,Cabinet 1,32.36,2024-05-07,2028-11-15,
+Consumables Item 53,Consumables,Eppendorf,C1052,L1052,686.75,kits,Freezer -80,33.86,2024-08-31,2029-07-22,
+DNA/RNA Item 54,DNA/RNA,Fisher,C1053,L1053,634.12,kits,Freezer -80,10.41,2023-04-18,2025-12-29,Handle with care
+Buffers Item 55,Buffers,NEB,C1054,L1054,692.05,tubes,Freezer -20,20.48,2024-11-27,2027-07-08,Handle with care
+Antibodies Item 56,Antibodies,Sigma-Aldrich,C1055,L1055,824.61,kits,Freezer -80,49.82,2025-04-11,2028-01-10,Keep sterile
+Enzymes Item 57,Enzymes,Corning,C1056,L1056,881.07,vials,Freezer -80,20.97,2023-01-19,2028-01-24,Keep sterile
+Plastics Item 58,Plastics,NEB,C1057,L1057,587.69,mL,Fridge 4C,21.85,2024-12-02,2029-06-09,Handle with care
+Plastics Item 59,Plastics,Sigma-Aldrich,C1058,L1058,245.59,tips,Fridge 4C,24.54,2024-05-29,2027-12-10,For qPCR only
+Kits Item 60,Kits,Bio-Rad,C1059,L1059,292.76,tips,Cabinet 2,7.51,2023-06-18,2028-10-19,
+Enzymes Item 61,Enzymes,Eppendorf,C1060,L1060,95.12,mL,Cabinet 1,44.86,2023-11-12,2027-07-17,Keep sterile
+Enzymes Item 62,Enzymes,NEB,C1061,L1061,875.74,mL,Cabinet 2,44.54,2024-04-29,2027-05-07,Light-sensitive
+Enzymes Item 63,Enzymes,ThermoFisher,C1062,L1062,44.09,vials,Cabinet 2,14.02,2024-01-01,2026-05-21,Keep sterile
+Reagents Item 64,Reagents,Eppendorf,C1063,L1063,489.69,vials,Shelf B,22.24,2023-09-30,2026-10-09,Light-sensitive
+Kits Item 65,Kits,Qiagen,C1064,L1064,643.41,µL,Fridge 4C,42.87,2024-01-31,2026-01-19,For qPCR only
+Kits Item 66,Kits,Eppendorf,C1065,L1065,453.01,µL,Cabinet 2,28.58,2024-01-21,2029-06-17,
+Reagents Item 67,Reagents,Eppendorf,C1066,L1066,948.75,vials,Shelf B,49.65,2023-08-23,2029-07-13,Handle with care
+Consumables Item 68,Consumables,ThermoFisher,C1067,L1067,447.07,tips,Cabinet 1,46.38,2024-01-19,2027-03-24,Keep sterile
+Reagents Item 69,Reagents,Eppendorf,C1068,L1068,118.95,tubes,Freezer -80,45.75,2024-09-11,2029-06-27,Handle with care
+Antibodies Item 70,Antibodies,Qiagen,C1069,L1069,496.17,mL,Freezer -80,11.63,2023-09-10,2028-12-25,
+Plastics Item 71,Plastics,Eppendorf,C1070,L1070,291.72,mL,Shelf A,7.76,2024-09-20,2026-11-07,For qPCR only
+Reagents Item 72,Reagents,Bio-Rad,C1071,L1071,970.72,L,Shelf B,45.64,2025-01-29,2027-08-06,
+DNA/RNA Item 73,DNA/RNA,Qiagen,C1072,L1072,155.08,g,Shelf A,47.71,2023-03-07,2027-10-26,For qPCR only
+DNA/RNA Item 74,DNA/RNA,NEB,C1073,L1073,573.95,vials,Shelf B,38.21,2023-06-30,2028-10-27,Handle with care
+Plastics Item 75,Plastics,ThermoFisher,C1074,L1074,645.65,tubes,Cabinet 2,29.65,2023-05-11,2026-08-27,Keep sterile
+Antibodies Item 76,Antibodies,Corning,C1075,L1075,891.83,L,Cabinet 1,11.38,2025-02-23,2027-10-07,Keep sterile
+Reagents Item 77,Reagents,Eppendorf,C1076,L1076,999.36,tips,Fridge 4C,43.17,2025-06-03,2027-07-09,Keep sterile
+DNA/RNA Item 78,DNA/RNA,Sigma-Aldrich,C1077,L1077,699.52,kits,Freezer -80,42.64,2024-11-20,2025-10-19,Light-sensitive
+Reagents Item 79,Reagents,Sigma-Aldrich,C1078,L1078,690.65,L,Freezer -80,22.07,2024-03-17,2028-02-24,Handle with care
+Plastics Item 80,Plastics,Bio-Rad,C1079,L1079,320.3,L,Cabinet 2,39.88,2025-08-10,2029-03-19,
+Consumables Item 81,Consumables,Qiagen,C1080,L1080,488.26,kits,Cabinet 1,32.69,2023-05-05,2027-10-13,Handle with care
+Enzymes Item 82,Enzymes,Bio-Rad,C1081,L1081,721.52,g,Fridge 4C,20.99,2023-03-21,2028-09-06,Keep sterile
+Consumables Item 83,Consumables,ThermoFisher,C1082,L1082,565.74,tips,Freezer -80,49.63,2024-02-02,2027-06-06,Light-sensitive
+Consumables Item 84,Consumables,Sigma-Aldrich,C1083,L1083,39.12,L,Fridge 4C,9.33,2023-07-29,2027-10-29,Light-sensitive
+Kits Item 85,Kits,ThermoFisher,C1084,L1084,321.94,g,Freezer -20,36.6,2024-04-07,2028-12-20,
+Antibodies Item 86,Antibodies,Qiagen,C1085,L1085,54.18,tips,Fridge 4C,0.69,2023-02-14,2025-11-30,Keep sterile
+Antibodies Item 87,Antibodies,Sigma-Aldrich,C1086,L1086,649.08,L,Shelf A,10.68,2024-07-28,2027-02-28,For qPCR only
+Plastics Item 88,Plastics,Bio-Rad,C1087,L1087,530.91,tips,Cabinet 2,49.81,2025-02-21,2027-03-18,Light-sensitive
+Reagents Item 89,Reagents,ThermoFisher,C1088,L1088,313.71,mL,Cabinet 2,49.02,2025-06-25,2025-11-05,Light-sensitive
+DNA/RNA Item 90,DNA/RNA,ThermoFisher,C1089,L1089,620.47,tips,Cabinet 1,39.02,2024-05-08,2029-09-03,For qPCR only
+DNA/RNA Item 91,DNA/RNA,Fisher,C1090,L1090,885.28,vials,Shelf B,38.78,2023-04-02,2027-11-02,Handle with care
+Reagents Item 92,Reagents,Corning,C1091,L1091,675.02,vials,Shelf B,4.16,2023-02-15,2029-06-30,Keep sterile
+Buffers Item 93,Buffers,R&D Systems,C1092,L1092,452.47,tubes,Shelf A,35.9,2023-01-04,2027-05-24,Keep sterile
+Antibodies Item 94,Antibodies,R&D Systems,C1093,L1093,426.34,tubes,Cabinet 2,39.99,2024-08-12,2028-06-06,
+Consumables Item 95,Consumables,Eppendorf,C1094,L1094,73.24,µL,Fridge 4C,46.38,2023-02-22,2028-05-07,Handle with care
+Media Item 96,Media,Bio-Rad,C1095,L1095,396.6,µL,Freezer -80,0.91,2023-08-20,2027-03-25,
+Media Item 97,Media,NEB,C1096,L1096,445.58,L,Cabinet 1,0.33,2023-07-15,2028-10-26,
+Enzymes Item 98,Enzymes,ThermoFisher,C1097,L1097,71.91,L,Shelf A,28.82,2024-05-23,2028-07-28,Handle with care
+Plastics Item 99,Plastics,Corning,C1098,L1098,745.28,vials,Freezer -20,48.04,2023-07-05,2026-05-04,Keep sterile
+Consumables Item 100,Consumables,ThermoFisher,C1099,L1099,515.12,µL,Freezer -80,12.64,2022-12-28,2026-02-14,Light-sensitive
+Media Item 101,Media,NEB,C1100,L1100,3.22,tubes,Freezer -80,47.86,2025-06-23,2027-09-04,Handle with care
+Reagents Item 102,Reagents,NEB,C1101,L1101,288.23,tubes,Freezer -20,46.47,2023-07-04,2026-08-19,Light-sensitive
+Reagents Item 103,Reagents,ThermoFisher,C1102,L1102,506.37,L,Shelf B,21.12,2024-04-21,2029-06-19,Light-sensitive
+Plastics Item 104,Plastics,Sigma-Aldrich,C1103,L1103,606.76,kits,Freezer -20,44.86,2025-02-07,2029-06-30,Keep sterile
+Reagents Item 105,Reagents,ThermoFisher,C1104,L1104,127.0,g,Cabinet 2,42.07,2024-05-03,2028-05-05,Light-sensitive
+Media Item 106,Media,Bio-Rad,C1105,L1105,732.7,µL,Fridge 4C,33.47,2025-05-20,2028-02-25,Light-sensitive
+Reagents Item 107,Reagents,Eppendorf,C1106,L1106,115.43,L,Freezer -20,46.97,2024-08-19,2027-06-14,
+Media Item 108,Media,Qiagen,C1107,L1107,338.48,vials,Shelf B,6.75,2022-12-25,2027-03-28,Light-sensitive
+Kits Item 109,Kits,Bio-Rad,C1108,L1108,130.87,µL,Shelf A,26.53,2025-02-02,2026-01-27,Handle with care
+DNA/RNA Item 110,DNA/RNA,Corning,C1109,L1109,294.84,vials,Cabinet 1,19.43,2023-05-02,2029-05-03,Light-sensitive
+Antibodies Item 111,Antibodies,Eppendorf,C1110,L1110,558.81,mL,Freezer -80,31.19,2025-04-23,2026-10-22,Handle with care
+Consumables Item 112,Consumables,Qiagen,C1111,L1111,256.27,vials,Cabinet 2,30.31,2023-04-04,2029-09-20,For qPCR only
+Reagents Item 113,Reagents,Corning,C1112,L1112,586.88,kits,Fridge 4C,44.54,2023-02-04,2028-09-30,For qPCR only
+Kits Item 114,Kits,ThermoFisher,C1113,L1113,916.61,g,Fridge 4C,41.82,2023-02-18,2026-01-03,Handle with care
+Buffers Item 115,Buffers,ThermoFisher,C1114,L1114,22.57,kits,Cabinet 2,12.94,2023-02-23,2028-11-16,Light-sensitive
+Media Item 116,Media,Qiagen,C1115,L1115,839.15,µL,Fridge 4C,0.2,2024-11-15,2026-07-25,Keep sterile
+DNA/RNA Item 117,DNA/RNA,Sigma-Aldrich,C1116,L1116,545.37,g,Fridge 4C,47.61,2024-07-09,2026-08-18,
+Buffers Item 118,Buffers,Corning,C1117,L1117,260.35,tips,Cabinet 2,46.82,2023-03-25,2027-09-14,Keep sterile
+Antibodies Item 119,Antibodies,Bio-Rad,C1118,L1118,89.66,mL,Shelf B,11.16,2023-03-31,2028-05-07,
+Enzymes Item 120,Enzymes,Eppendorf,C1119,L1119,485.29,tubes,Freezer -20,36.8,2024-12-29,2027-10-19,Light-sensitive
+Consumables Item 121,Consumables,Eppendorf,C1120,L1120,347.32,kits,Freezer -80,28.89,2025-01-09,2028-12-08,
+Antibodies Item 122,Antibodies,NEB,C1121,L1121,145.58,vials,Fridge 4C,29.12,2024-04-22,2026-02-11,Handle with care
+Buffers Item 123,Buffers,NEB,C1122,L1122,617.92,µL,Fridge 4C,10.31,2023-01-05,2029-02-02,
+DNA/RNA Item 124,DNA/RNA,Fisher,C1123,L1123,335.25,µL,Shelf B,22.51,2023-06-04,2028-09-05,Handle with care
+Buffers Item 125,Buffers,NEB,C1124,L1124,360.21,vials,Shelf B,22.24,2024-03-26,2026-11-02,Light-sensitive
+Reagents Item 126,Reagents,Corning,C1125,L1125,254.45,g,Shelf B,8.04,2022-12-30,2025-12-07,Keep sterile
+Antibodies Item 127,Antibodies,Corning,C1126,L1126,761.18,vials,Cabinet 2,28.83,2025-07-17,2027-04-05,Keep sterile
+Buffers Item 128,Buffers,Sigma-Aldrich,C1127,L1127,172.21,kits,Fridge 4C,45.27,2023-12-16,2025-11-12,For qPCR only
+DNA/RNA Item 129,DNA/RNA,R&D Systems,C1128,L1128,390.33,L,Cabinet 1,44.14,2024-10-05,2026-05-24,Keep sterile
+Plastics Item 130,Plastics,Fisher,C1129,L1129,814.38,vials,Shelf B,35.14,2024-08-26,2026-04-12,Handle with care
+Buffers Item 131,Buffers,Fisher,C1130,L1130,250.53,L,Freezer -80,32.31,2024-12-05,2026-06-30,Light-sensitive
+Plastics Item 132,Plastics,Corning,C1131,L1131,527.55,g,Cabinet 2,2.02,2023-06-12,2027-02-17,Light-sensitive
+Reagents Item 133,Reagents,NEB,C1132,L1132,356.95,L,Freezer -20,42.31,2024-04-11,2026-03-11,For qPCR only
+Kits Item 134,Kits,Sigma-Aldrich,C1133,L1133,608.46,µL,Freezer -80,19.65,2024-08-26,2028-05-06,Light-sensitive
+Enzymes Item 135,Enzymes,Fisher,C1134,L1134,715.27,g,Shelf B,35.07,2024-12-29,2026-02-01,Keep sterile
+Reagents Item 136,Reagents,Bio-Rad,C1135,L1135,361.56,tubes,Shelf B,6.76,2025-05-24,2027-11-17,For qPCR only
+Consumables Item 137,Consumables,NEB,C1136,L1136,899.05,kits,Freezer -80,27.07,2023-12-05,2029-07-20,Light-sensitive
+Plastics Item 138,Plastics,ThermoFisher,C1137,L1137,746.49,g,Freezer -80,47.7,2024-08-22,2026-07-04,For qPCR only
+Media Item 139,Media,Eppendorf,C1138,L1138,599.76,µL,Freezer -80,15.74,2025-06-20,2026-09-16,For qPCR only
+Enzymes Item 140,Enzymes,R&D Systems,C1139,L1139,471.08,g,Freezer -20,46.85,2023-12-26,2026-04-25,Light-sensitive
+Kits Item 141,Kits,Bio-Rad,C1140,L1140,816.77,tubes,Cabinet 1,36.33,2024-02-27,2027-11-11,
+Antibodies Item 142,Antibodies,R&D Systems,C1141,L1141,871.24,µL,Freezer -80,43.43,2023-04-03,2026-07-14,Keep sterile
+Kits Item 143,Kits,R&D Systems,C1142,L1142,974.02,g,Freezer -20,24.57,2025-02-16,2027-04-12,Light-sensitive
+Antibodies Item 144,Antibodies,Fisher,C1143,L1143,210.93,L,Freezer -20,37.55,2024-04-23,2026-01-17,Keep sterile
+Antibodies Item 145,Antibodies,NEB,C1144,L1144,383.87,L,Cabinet 1,25.22,2023-11-13,2025-12-11,Keep sterile
+Enzymes Item 146,Enzymes,Eppendorf,C1145,L1145,869.16,tubes,Cabinet 2,32.17,2025-01-02,2028-11-20,
+Buffers Item 147,Buffers,Bio-Rad,C1146,L1146,967.18,tips,Fridge 4C,20.01,2024-07-18,2026-12-25,For qPCR only
+Antibodies Item 148,Antibodies,Bio-Rad,C1147,L1147,760.24,g,Fridge 4C,36.89,2025-07-17,2028-05-02,Light-sensitive
+Plastics Item 149,Plastics,Bio-Rad,C1148,L1148,562.07,L,Cabinet 1,34.38,2023-10-09,2027-12-20,
+Antibodies Item 150,Antibodies,Qiagen,C1149,L1149,588.84,tips,Cabinet 2,43.09,2025-07-22,2029-02-11,Keep sterile

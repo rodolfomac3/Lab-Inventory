@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Analytics</h1>
+
+<div class="grid md:grid-cols-2 gap-4">
+  <div class="card p-4">
+    <h2 class="font-semibold mb-2">Items by Category</h2>
+    <table class="w-full text-sm border border-slate-300">
+      <thead class="bg-slate-100">
+        <tr>
+          <th class="th border-r border-slate-300">Category</th>
+          <th class="th">Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cat, n in by_cat %}
+        <tr class="border-t">
+          <td class="td border-r border-slate-300">{{ cat or "—" }}</td>
+          <td class="td">{{ n }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card p-4">
+    <h2 class="font-semibold mb-2">Items by Vendor</h2>
+    <table class="w-full text-sm border border-slate-300">
+      <thead class="bg-slate-100">
+        <tr>
+          <th class="th border-r border-slate-300">Vendor</th>
+          <th class="th">Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for vendor, n in by_vendor %}
+        <tr class="border-t">
+          <td class="td border-r border-slate-300">{{ vendor or "—" }}</td>
+          <td class="td">{{ n }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card p-4 md:col-span-2">
+    <h2 class="font-semibold mb-2">Usage (sum of deltas) — last 90 days</h2>
+    <table class="w-full text-sm border border-slate-300">
+      <thead class="bg-slate-100">
+        <tr>
+          <th class="th border-r border-slate-300">Date</th>
+          <th class="th">Δ Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d, s in usage %}
+        <tr class="border-t">
+          <td class="td border-r border-slate-300">{{ d }}</td>
+          <td class="td {{ 'text-emerald-700' if (s or 0) > 0 else 'text-rose-600' }}">{{ s or 0 }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card p-4">
+    <h2 class="font-semibold mb-2">Risk Snapshot</h2>
+    <ul class="text-sm">
+      <li>Low stock items: <span class="font-semibold">{{ low }}</span></li>
+      <li>Expiring (30d): <span class="font-semibold">{{ expiring_30 }}</span></li>
+    </ul>
+  </div>
+
+  <div class="card p-4">
+    <h2 class="font-semibold mb-2">Items per Lab</h2>
+    <table class="w-full text-sm border border-slate-300">
+      <thead class="bg-slate-100">
+        <tr>
+          <th class="th border-r border-slate-300">Lab</th>
+          <th class="th">Items</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for lab_name, n in lab_counts %}
+        <tr class="border-t">
+          <td class="td border-r border-slate-300">{{ lab_name }}</td>
+          <td class="td">{{ n }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

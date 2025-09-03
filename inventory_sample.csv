@@ -1,0 +1,6 @@
+name,category,vendor,catalog_no,lot_no,quantity,units,location,threshold,received_date,expiry_date,notes
+Taq Polymerase,Reagents,ThermoFisher,12345,LOT001,2,vials,Freezer -20,1,2025-01-15,2026-01-15,For PCR
+Agarose Powder,Reagents,Sigma-Aldrich,AG100,LOT101,500,g,Chemical Cabinet,200,2024-11-01,2027-11-01,Low-melting point
+ELISA Kit (TNF-α),Kits,R&D Systems,EL100,LOT202,3,kits,Fridge 4C,1,2025-02-01,2025-08-01,Keep refrigerated
+Pipette Tips 200µL,Consumables,Eppendorf,TIP200,LOT303,10000,tips,Shelf A,2000,2025-01-01,2029-01-01,Filtered tips
+LB Broth Powder,Media,Fisher,LB500,LOT404,250,g,Media Cabinet,50,2024-12-10,2026-12-10,For bacterial cultures

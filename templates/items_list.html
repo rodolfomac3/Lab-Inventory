@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Toolbar / Filters -->
+<div class="card p-4 mb-4">
+  <form method="get" action="{{ url_for('items_list') }}" class="grid md:grid-cols-[1fr,200px,200px,200px,200px,auto,120px] gap-2 items-end">
+    <div class="relative">
+      <input type="text" name="q" value="{{ request.args.get('q','') }}"
+             placeholder="Search name, vendor, catalog, location" class="input pl-9">
+      <svg class="absolute left-3 top-2.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    </div>
+
+    <select name="category" class="select">
+      <option value="">All categories</option>
+      {% for c in category_options or [] %}
+        <option value="{{ c }}" {% if request.args.get('category')==c %}selected{% endif %}>{{ c }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="vendor" class="select">
+      <option value="">All vendors</option>
+      {% for v in vendor_options or [] %}
+        <option value="{{ v }}" {% if request.args.get('vendor')==v %}selected{% endif %}>{{ v }}</option>
+      {% endfor %}
+    </select>
+
+    {% if lab_options %}
+    <select name="lab" class="select">
+      <option value="">All labs</option>
+      {% for l in lab_options %}
+        <option value="{{ l }}" {% if request.args.get('lab')==l %}selected{% endif %}>{{ l }}</option>
+      {% endfor %}
+    </select>
+    {% endif %}
+
+    <select name="status" class="select">
+      <option value="">Any status</option>
+      <option value="low" {% if request.args.get('status')=='low' %}selected{% endif %}>Low stock</option>
+      <option value="expiring" {% if request.args.get('status')=='expiring' %}selected{% endif %}>Expiring (30d)</option>
+    </select>
+
+    <!-- Page size -->
+    <div>
+      <label class="block text-xs text-slate-500 mb-1">Rows / page</label>
+      <select name="per_page" class="select" onchange="this.form.page && (this.form.page.value=1); this.form.submit();">
+        {% for n in [20,50,100] %}
+          <option value="{{ n }}" {% if per_page==n %}selected{% endif %}>{{ n }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="flex gap-2 justify-end">
+      <input type="hidden" name="page" value="1">
+      <button class="btnp" title="Apply filters">Apply</button>
+      <a href="{{ url_for('items_list') }}" class="btn" title="Reset filters">Reset</a>
+      <a href="{{ url_for('item_new') }}" class="btn" title="Add new item">New</a>
+    </div>
+  </form>
+</div>
+
+<!-- Inventory table -->
+<div class="overflow-x-auto card">
+  <table class="w-full text-[15px] border border-slate-300">
+    <thead>
+      <tr class="bg-slate-100">
+        <th class="th border-r border-slate-300">Name</th>
+        <th class="th border-r border-slate-300">Category</th>
+        <th class="th border-r border-slate-300">Vendor</th>
+        <th class="th border-r border-slate-300">Qty</th>
+        <th class="th border-r border-slate-300">Expiry</th>
+        <th class="th">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in items %}
+      {% set row_tint = 'bg-rose-50/60' if i.is_low() else ('bg-amber-50/60' if i.is_expiring(30) else '') %}
+      <tr class="row odd:bg-white even:bg-slate-50 {{ row_tint }}">
+        <td class="td border-r border-slate-300">
+          <div class="font-semibold text-[16px]">{{ i.name }}</div>
+          <div class="text-[13px] text-slate-500 mt-0.5">
+            {{ i.catalog_no or '' }}{% if i.catalog_no and i.lot_no %} · {% endif %}{{ i.lot_no or '' }}
+            {% if i.location %} · <span>{{ i.location }}</span>{% endif %}
+          </div>
+        </td>
+        <td class="td border-r border-slate-300">{{ i.category or "—" }}</td>
+        <td class="td border-r border-slate-300">{{ i.vendor or "—" }}</td>
+        <td class="td border-r border-slate-300">
+          {{ i.quantity or 0 }} {{ i.units or "" }}
+          {% if i.is_low() %}<span class="badge bg-rose-100 text-rose-800 ml-2">Low</span>{% endif %}
+        </td>
+        <td class="td border-r border-slate-300">
+          {% if i.expiry_date %}
+            {{ i.expiry_date }}
+            {% if i.is_expiring(30) %}<span class="badge bg-amber-100 text-amber-800 ml-2">Expiring</span>{% endif %}
+          {% else %}—{% endif %}
+        </td>
+        <td class="td">
+          <div class="flex items-center gap-2 relative">
+            <a href="{{ url_for('item_edit', item_id=i.id) }}" class="btn" title="Edit">Edit</a>
+            <details class="dropdown">
+              <summary class="btn">Actions ▾</summary>
+              <div class="menu">
+                <button type="button" onclick="togglePanel('consume-{{ i.id }}')">Consume</button>
+                <button type="button" onclick="togglePanel('receive-{{ i.id }}')">Receive</button>
+                <button type="button" onclick="togglePanel('reorder-{{ i.id }}')">Reorder</button>
+                <form action="{{ url_for('item_delete', item_id=i.id) }}" method="post"
+                      onsubmit="return confirm('Delete {{ i.name|e }}?');">
+                  <button>Delete</button>
+                </form>
+              </div>
+            </details>
+          </div>
+
+          <!-- Slide-down panels (unchanged) -->
+          <div id="consume-{{ i.id }}" data-open="0" style="display:none"
+               class="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <form action="{{ url_for('item_consume', item_id=i.id) }}" method="post" class="grid sm:grid-cols-3 gap-2">
+              <input required type="number" step="any" name="amount" placeholder="Amount" class="input">
+              <input type="text" name="actor" placeholder="Performed by (optional)" class="input">
+              <input type="text" name="note" placeholder="Note (optional)" class="input sm:col-span-2">
+              <div class="flex gap-2 sm:justify-end">
+                <button type="button" class="btn" onclick="togglePanel('consume-{{ i.id }}')">Cancel</button>
+                <button class="btnp">Consume</button>
+              </div>
+            </form>
+          </div>
+
+          <div id="receive-{{ i.id }}" data-open="0" style="display:none"
+               class="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <form action="{{ url_for('item_receive', item_id=i.id) }}" method="post" class="grid sm:grid-cols-3 gap-2">
+              <input required type="number" step="any" name="amount" placeholder="Amount" class="input">
+              <input type="text" name="actor" placeholder="Received by (optional)" class="input">
+              <input type="text" name="note" placeholder="Note (optional)" class="input sm:col-span-2">
+              <div class="flex gap-2 sm:justify-end">
+                <button type="button" class="btn" onclick="togglePanel('receive-{{ i.id }}')">Cancel</button>
+                <button class="btnp">Receive</button>
+              </div>
+            </form>
+          </div>
+
+          <div id="reorder-{{ i.id }}" data-open="0" style="display:none"
+               class="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <form action="{{ url_for('item_reorder', item_id=i.id) }}" method="post" class="grid sm:grid-cols-3 gap-2">
+              <input type="number" step="any" name="requested_qty" placeholder="Quantity" class="input">
+              <input type="text" name="note" placeholder="Notes (optional)" class="input sm:col-span-2">
+              <div class="flex gap-2 sm:justify-end">
+                <button type="button" class="btn" onclick="togglePanel('reorder-{{ i.id }}')">Cancel</button>
+                <button class="btnp">Add to Reorder</button>
+              </div>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Pagination footer -->
+<div class="mt-3 flex flex-wrap items-center gap-3 justify-between">
+  <div class="text-sm text-slate-600">
+    {% set start = (page-1)*per_page + 1 if total>0 else 0 %}
+    {% set end = (page-1)*per_page + (items|length) %}
+    Showing <span class="font-medium">{{ start }}</span>–<span class="font-medium">{{ end }}</span> of <span class="font-medium">{{ total }}</span>
+  </div>
+
+  {% if total_pages > 1 %}
+  <nav class="flex items-center gap-1">
+    <a class="btn {% if page==1 %}pointer-events-none opacity-50{% endif %}" href="{{ url_for_params(page=1) }}">« First</a>
+    <a class="btn {% if page==1 %}pointer-events-none opacity-50{% endif %}" href="{{ url_for_params(page=page-1 if page>1 else 1) }}">‹ Prev</a>
+
+    {# Numbered pages (compact window around current) #}
+    {% set window = 2 %}
+    {% for p in range(1, total_pages+1) %}
+      {% if p==1 or p==total_pages or (p>=page-window and p<=page+window) %}
+        <a class="btn {% if p==page %}btnp text-white{% endif %}" href="{{ url_for_params(page=p) }}">{{ p }}</a>
+      {% elif p==2 and page-window>3 %}
+        <span class="px-2">…</span>
+      {% elif p==total_pages-1 and page+window<total_pages-2 %}
+        <span class="px-2">…</span>
+      {% endif %}
+    {% endfor %}
+
+    <a class="btn {% if page==total_pages %}pointer-events-none opacity-50{% endif %}" href="{{ url_for_params(page=page+1 if page<total_pages else total_pages) }}">Next ›</a>
+    <a class="btn {% if page==total_pages %}pointer-events-none opacity-50{% endif %}" href="{{ url_for_params(page=total_pages) }}">Last »</a>
+  </nav>
+  {% endif %}
+</div>
+
+{% if not items %}
+  <p class="text-slate-500 mt-4">No items found. Try clearing filters or importing a CSV.</p>
+{% endif %}
+{% endblock %}

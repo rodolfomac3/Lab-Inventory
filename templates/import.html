@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Import from CSV</h1>
+
+<div class="p-5 card">
+  <form method="post" action="{{ url_for('import_csv') }}" enctype="multipart/form-data" class="space-y-4">
+    <input type="file" name="file" accept=".csv" required
+           class="block w-full text-sm file:mr-4 file:py-2 file:px-4
+                  file:rounded-lg file:border file:border-slate-300 file:bg-slate-100 file:text-slate-700" />
+    <button class="btn btnp">Import</button>
+  </form>
+
+  <div class="mt-6 text-sm text-slate-600">
+    <p class="font-semibold mb-2">Expected columns (header row):</p>
+    <pre class="p-3 rounded-lg bg-slate-50 border border-slate-200 overflow-x-auto">
+name,category,vendor,catalog_no,lot_no,quantity,units,location,threshold,received_date,expiry_date,notes
+    </pre>
+    <ul class="list-disc list-inside mt-3 space-y-1">
+      <li><b>Dates</b>: <code>YYYY-MM-DD</code> (or <code>MM/DD/YYYY</code>, <code>DD-MM-YYYY</code>)</li>
+      <li><b>Numbers</b>: <code>quantity</code> and <code>threshold</code> parsed as floats</li>
+      <li><b>Optional</b>: any empty cell is allowed</li>
+    </ul>
+  </div>
+
+  <div class="mt-6">
+    <a href="{{ url_for('items_list') }}" class="text-sky-700 hover:underline">&larr; Back to items</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{{ title or "Lab Inventory" }}</title>
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'] },
+          colors: {
+            ink:{50:"#f9fafb",100:"#f3f4f6",200:"#e4e7ec",300:"#d0d5dd",400:"#98a2b3",500:"#667085",600:"#475467",700:"#344054",800:"#1d2939",900:"#101828"},
+            accent:{50:"#ecfeff",100:"#cffafe",500:"#0d9488",600:"#0f766e"}
+          },
+          boxShadow:{
+            soft:"0 1px 2px rgba(0,0,0,.04), 0 6px 20px -10px rgba(0,0,0,.12)",
+            head:"0 10px 20px -18px rgba(16,24,40,.28)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- helpers (panel toggles & close open dropdowns) -->
+  <script>
+    function togglePanel(id){
+      const el=document.getElementById(id);
+      if(!el) return;
+      const open=el.getAttribute('data-open')==='1';
+      el.style.display=open?'none':'block';
+      el.setAttribute('data-open', open?'0':'1');
+    }
+    document.addEventListener('click',(e)=>{
+      document.querySelectorAll('details.dropdown[open]').forEach(d=>{
+        if(!d.contains(e.target)) d.removeAttribute('open');
+      });
+    });
+    document.addEventListener('scroll', () => {
+      const bar = document.getElementById('topbar');
+      if (!bar) return;
+      if (window.scrollY > 4) bar.classList.add('shadow-head');
+      else bar.classList.remove('shadow-head');
+    });
+  </script>
+
+  <!-- Global CSS (browser-ready, no @apply) -->
+  <style>
+    html,body{height:100%}
+    body{
+      font-feature-settings:"ss01" 1;
+      background:
+        radial-gradient(1200px 600px at 60% -10%, rgba(13,148,136,.04), transparent 70%),
+        linear-gradient(180deg, #f3f4f6, #f3f4f6); /* slightly darker backdrop */
+      color:#101828;
+    }
+    /* faint layout grid for depth */
+    body::before{
+      content:""; position:fixed; inset:0; pointer-events:none;
+      background-image: linear-gradient(to right, rgba(16,24,40,.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(16,24,40,.03) 1px, transparent 1px);
+      background-size: 64px 64px; opacity:.22;
+      mask-image: radial-gradient(1100px 900px at 60% 0%, black, transparent 80%);
+    }
+
+    /* layout helpers */
+    .wrap{ max-width:1760px }        /* <— wider canvas */
+
+    /* dropdown */
+    details.dropdown > summary{list-style:none;cursor:pointer}
+    details.dropdown > summary::-webkit-details-marker{display:none}
+    .menu{display:none}
+    details[open] .menu{display:block}
+
+    /* cards / inputs / buttons / tables (shared primitives) */
+    .card{
+      background:#fff; border:1px solid #e4e7ec; border-radius:12px; box-shadow:var(--shadow-soft, 0 1px 2px rgba(0,0,0,.04), 0 6px 20px -10px rgba(0,0,0,.12));
+    }
+    .btn{
+      display:inline-flex;align-items:center;gap:.5rem;padding:.55rem .8rem;border-radius:10px;border:1px solid #e4e7ec;background:#fff;color:#344054;font-size:.875rem;transition:background .15s,border-color .15s,box-shadow .15s;
+    }
+    .btn:hover{background:#f2f4f7}
+    .btnp{
+      display:inline-flex;align-items:center;gap:.5rem;padding:.55rem .9rem;border-radius:10px;border:1px solid #0f766e;background:#0d9488;color:#fff;font-weight:500;transition:background .15s,box-shadow .15s,border-color .15s;
+    }
+    .btnp:hover{background:#0f766e}
+    .input,.select,textarea{
+      width:100%;background:#fff;color:#101828;border:1px solid #e4e7ec;border-radius:10px;padding:.55rem .75rem;font-size:.9rem;line-height:1.4;transition:border-color .15s,box-shadow .15s,background-color .15s;
+    }
+    .input:focus,.select:focus,textarea:focus{outline:0;border-color:#0d9488;box-shadow:0 0 0 3px rgba(13,148,136,.18)}
+    .th{position:sticky;top:0;z-index:1;background:#f3f4f6;text-transform:uppercase;letter-spacing:.04em;font-size:12px;font-weight:600;padding:.75rem 1rem;text-align:left;border-bottom:1px solid #e4e7ec}
+    .td{padding:.75rem 1rem;border-bottom:1px solid #e4e7ec;vertical-align:top}
+    .row:hover{background:#f9fafb}
+    .badge{display:inline-flex;align-items:center;padding:.125rem .5rem;border-radius:999px;font-size:.75rem;font-weight:500;border:1px solid transparent}
+    .badge-low{background:#ffe4e6;color:#be123c;border-color:#fecdd3}
+    .badge-exp{background:#fef3c7;color:#92400e;border-color:#fde68a}
+    .side-link{display:block;width:100%;padding:.6rem .75rem;border-radius:8px;font-size:.9rem;color:#344054;transition:background .15s}
+    .side-link:hover{background:#eef2f6}
+    .muted{color:#667085}
+  </style>
+</head>
+<body class="min-h-full font-sans antialiased">
+  {% set ep = request.endpoint %}
+
+  <!-- Top bar -->
+  <div id="topbar" class="sticky top-0 z-40 border-b border-ink-200 bg-white transition-shadow">
+    <div class="mx-auto wrap px-8 h-14 flex items-center justify-between">
+      <a href="{{ url_for('dashboard') }}" class="font-semibold text-ink-900 tracking-tight">Lab Inventory</a>
+      <div class="hidden md:flex items-center gap-2 text-sm">
+        <a href="{{ url_for('import_view') }}" class="btn">Documents</a>
+        <a href="{{ url_for('items_list') }}" class="btn">Items</a>
+        <a href="{{ url_for('export_csv') }}" class="btn">Export CSV</a>
+        <a href="{{ url_for('item_new') }}" class="btnp">Add Item</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shell (wider gutters, more room for content) -->
+  <div class="mx-auto wrap px-8 py-10 grid grid-cols-1 xl:grid-cols-[260px_minmax(0,1fr)] gap-10">
+    <!-- Sidebar -->
+    <aside class="space-y-3">
+      <div class="card divide-y divide-ink-200">
+        <a href="{{ url_for('items_list') }}" class="side-link {{ 'bg-accent-50 text-accent-600' if ep=='items_list' else '' }}">Search</a>
+        <a href="{{ url_for('item_new') }}" class="side-link {{ 'bg-accent-50 text-accent-600' if ep=='item_new' else '' }}">Add Item</a>
+
+        <details class="dropdown">
+          <summary class="side-link flex items-center justify-between">
+            <span>Procurement</span><span class="muted">▾</span>
+          </summary>
+          <div class="p-2">
+            <a href="{{ url_for('reorder_list') }}" class="block px-3 py-2 rounded hover:bg-ink-100 text-sm {{ 'bg-accent-50 text-accent-600' if ep=='reorder_list' else '' }}">Reorder List</a>
+          </div>
+        </details>
+
+        <a href="{{ url_for('labs_list') }}" class="side-link {{ 'bg-accent-50 text-accent-600' if ep=='labs_list' else '' }}">Research Groups</a>
+        <a href="{{ url_for('import_view') }}" class="side-link {{ 'bg-accent-50 text-accent-600' if ep=='import_view' else '' }}">Documents</a>
+
+        <details class="dropdown">
+          <summary class="side-link flex items-center justify-between">
+            <span>Admin</span><span class="muted">▾</span>
+          </summary>
+          <div class="p-2">
+            <a href="{{ url_for('analytics') }}" class="block px-3 py-2 rounded hover:bg-ink-100 text-sm {{ 'bg-accent-50 text-accent-600' if ep=='analytics' else '' }}">Inventory Analytics</a>
+            <a href="{{ url_for('transactions_list') }}" class="block px-3 py-2 rounded hover:bg-ink-100 text-sm {{ 'bg-accent-50 text-accent-600' if ep=='transactions_list' else '' }}">Activity & Auditing</a>
+          </div>
+        </details>
+      </div>
+
+    </aside>
+
+    <!-- Main content (no outer card → more usable width) -->
+    <main>
+      <!-- Page header (lightweight) -->
+      <div class="rounded-xl border border-ink-200 bg-white/90 backdrop-blur-sm shadow-soft mb-6">
+        <div class="bg-gradient-to-b from-ink-100 to-transparent border-b border-ink-200 px-6 py-4 flex items-center justify-between rounded-t-xl">
+          <div class="font-semibold tracking-tight"></div>
+        </div>
+
+        <!-- Flash messages + content -->
+        <div class="p-6">
+          {% with msgs = get_flashed_messages(with_categories=true) %}
+            {% if msgs %}
+              <div class="mb-4 space-y-2">
+                {% for cat, msg in msgs %}
+                  <div class="px-3 py-2 rounded-md text-sm border
+                    {% if cat=='error' %} bg-rose-50 text-rose-800 border-rose-200
+                    {% elif cat=='success' %} bg-emerald-50 text-emerald-800 border-emerald-200
+                    {% else %} bg-ink-100 text-ink-800 border-ink-200 {% endif %}">
+                    {{ msg }}
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endwith %}
+
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+
+      <footer class="py-10 text-xs text-ink-600 text-center">
+        © {{ current_year }} Lab Inventory
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
