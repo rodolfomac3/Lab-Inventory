@@ -15,8 +15,12 @@ from werkzeug.utils import secure_filename
 
 # ---------- Config ----------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "inventory.db")
-UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
+
+# Use DATA_DIR for deploys (e.g., Render/Docker mounted disk), fallback to BASE_DIR locally
+DATA_DIR = os.environ.get("DATA_DIR", BASE_DIR)
+
+DB_PATH = os.path.join(DATA_DIR, "inventory.db")
+UPLOAD_DIR = os.path.join(DATA_DIR, "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 ALLOWED_EXTS = {"pdf", "png", "jpg", "jpeg", "webp", "txt", "csv", "docx", "xlsx"}
@@ -148,7 +152,7 @@ def coerce_float(s: Optional[str]) -> Optional[float]:
         return None
 
 def allowed_file(filename: str) -> bool:
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in {"pdf","png","jpg","jpeg","webp","txt","csv","docx","xlsx"}
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTS
 
 
 # ---------- Views ----------

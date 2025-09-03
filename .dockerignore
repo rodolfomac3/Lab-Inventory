@@ -1,0 +1,26 @@
+# git / OS
+.git/
+.gitignore
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtualenvs
+.venv/
+venv/
+env/
+
+# Local data you’ll mount instead
+uploads/
+inventory.db
+
+# Build artifacts
+dist/
+build/
+.eggs/
+*.egg-info/
+*.log
